@@ -1,0 +1,123 @@
+openapi: 3.0.1
+info:
+  title: Prices
+  description: 'API to provide information about products prices'
+  version: 1.0.0
+tags:
+  - name: Prices
+    description: Prices
+paths:
+  /prices:
+    get:
+      summary: Returns information about prices of a specific product
+      operationId: getPrice
+      tags:
+        - prices
+      parameters:
+        - name: dateApplicationPrice
+          description: Date application of price (yyyy-MM-dd HH:mm:ss)
+          required: true
+          allowEmptyValue: false
+          in: query
+          schema:
+            type: string
+        - name: productId
+          description: Product identifier
+          required: true
+          allowEmptyValue: false
+          in: query
+          schema:
+            type: number
+        - name: brandId
+          description: Chain identifier
+          required: true
+          allowEmptyValue: false
+          in: query
+          schema:
+            type: number
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceResponse'
+              example:
+                data:
+                  - productId: 35455
+                    brandId: "1"
+                    priceListId: "2"
+                    startDate: "2020-06-14 15.00.00"
+                    endDate: "2020-06-14 18.30.00"
+                    price: 25.45
+
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 400
+                message: Error in the product identifier parameter
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 401
+                message: Credentials error or not provided
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                code: 500
+                message: Unexpected server error
+components:
+  schemas:
+    PriceResponse:
+      description: Product price information returned
+      type: object
+      properties:
+        productId:
+          description: Product identifier
+          type: string
+          format: int64
+        brandId:
+          description: Chain identifier
+          type: string
+          format: int64
+        priceListId:
+          description: Applicable price rate identifier
+          type: string
+          format: int64
+        startDate:
+          description: Start date of application price
+          type: string
+          format: date-time
+        endDate:
+          description: End date of application price
+          type: string
+          format: date-time
+        price:
+          description: Product price
+          type: number
+          format: double
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: HTTP response status code
+        message:
+          type: string
+          description: Applicable price rate identifier
