@@ -120,4 +120,4 @@ components:
           description: HTTP response status code
         message:
           type: string
-          description: Applicable price rate identifier
+          description: Detail of error

@@ -15,6 +15,13 @@
 	<description>Challenge for interview to Capitole</description>
 	<properties>
 		<java.version>17</java.version>
+		<springdoc-openapi-starter-webmvc-ui.version>2.0.2</springdoc-openapi-starter-webmvc-ui.version>
+		<jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
+		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+		<javax.annotation-api.version>1.3.2</javax.annotation-api.version>
+		<validation-api.version>2.0.1.Final</validation-api.version>
+		<servlet-api.version>3.0-alpha-1</servlet-api.version>
+		<openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -45,33 +52,33 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.0.2</version>
+			<version>${springdoc-openapi-starter-webmvc-ui.version}</version>
 		</dependency>
 		<!-- dependencies needed to generate the classes openapi-->
 		<dependency>
 			<groupId>org.openapitools</groupId>
 			<artifactId>jackson-databind-nullable</artifactId>
-			<version>0.2.1</version>
+			<version>${jackson-databind-nullable.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.2</version>
+			<version>${springfox-swagger2.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>javax.annotation-api</artifactId>
-			<version>1.3.2</version>
+			<version>${javax.annotation-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
+			<version>${validation-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>3.0-alpha-1</version>
+			<version>${servlet-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
@@ -94,7 +101,7 @@
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>5.1.0</version>
+				<version>${openapi-generator-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<goals>
