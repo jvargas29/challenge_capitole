@@ -17,11 +17,10 @@
 		<java.version>17</java.version>
 		<springdoc-openapi-starter-webmvc-ui.version>2.0.2</springdoc-openapi-starter-webmvc-ui.version>
 		<jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
-		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
 		<javax.annotation-api.version>1.3.2</javax.annotation-api.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<servlet-api.version>3.0-alpha-1</servlet-api.version>
-		<openapi-generator-maven-plugin.version>5.1.0</openapi-generator-maven-plugin.version>
+		<openapi-generator-maven-plugin.version>6.4.0</openapi-generator-maven-plugin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -60,12 +59,7 @@
 			<artifactId>jackson-databind-nullable</artifactId>
 			<version>${jackson-databind-nullable.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${springfox-swagger2.version}</version>
-		</dependency>
-		<dependency>
+		 <dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>javax.annotation-api</artifactId>
 			<version>${javax.annotation-api.version}</version>
@@ -117,9 +111,7 @@
 							<supportingFilesToGenerate>
 								ApiUtil.java
 							</supportingFilesToGenerate>
-							<configOptions>
-								<delegatePattern>true</delegatePattern>
-							</configOptions>
+							<ignoreFileOverride>${project.basedir}/src/main/resources/api/.openapi-generator-ignore</ignoreFileOverride>
 						</configuration>
 					</execution>
 				</executions>
