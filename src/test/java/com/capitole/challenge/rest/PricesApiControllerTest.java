@@ -1,5 +1,6 @@
 package com.capitole.challenge.rest;
 
+import com.capitole.challenge.exception.PriceNotFoundException;
 import com.capitole.challenge.model.PriceResponse;
 import com.capitole.challenge.rest.dto.PriceDto;
 import com.capitole.challenge.service.PriceServiceImpl;
@@ -16,6 +17,7 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -56,6 +58,36 @@ class PricesApiControllerTest {
                 .andExpect(jsonPath("$.startDate").value("2020-06-14T00:00:00Z"))
                 .andExpect(jsonPath("$.endDate").value("2020-12-31T23:59:59Z"))
                 .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    void whenBadParam_thenReturns400() throws Exception {
+        doThrow(PriceNotFoundException.class).when(priceService).getCurrentPriceByPriceDTO(any(PriceDto.class));
+
+        mockMvc.perform(get("/prices")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("dateApplicationPrice", "2020-06-20 00:00:00")
+                        .param("productId","1" )
+                        .param("brandId", "1"))
+                .andExpect(jsonPath("$.code").value(400))
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(status().is4xxClientError())
+                .andDo(print());
+    }
+
+    @Test
+    void whenFailService_thenReturns500() throws Exception {
+        doThrow(RuntimeException.class).when(priceService).getCurrentPriceByPriceDTO(any(PriceDto.class));
+
+        mockMvc.perform(get("/prices")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("dateApplicationPrice", "2020-06-20 00:00:00")
+                        .param("productId","1" )
+                        .param("brandId", "1"))
+                .andExpect(jsonPath("$.code").value(500))
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(status().is5xxServerError())
                 .andDo(print());
     }
 }

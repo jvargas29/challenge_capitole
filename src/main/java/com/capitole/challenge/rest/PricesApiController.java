@@ -17,8 +17,13 @@ import java.time.format.DateTimeFormatter;
 @RestController
 public class PricesApiController implements PricesApi {
 
+
+    private final PriceServiceImpl priceService;
+
     @Autowired
-    PriceServiceImpl priceService;
+    public PricesApiController(PriceServiceImpl priceService) {
+        this.priceService = priceService;
+    }
 
     @Override
     public ResponseEntity<PriceResponse> getPrice(@NotNull @Valid String dateApplicationPrice, @NotNull @Valid BigDecimal productId, @NotNull @Valid BigDecimal brandId) {

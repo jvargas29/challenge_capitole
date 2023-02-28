@@ -1,5 +1,6 @@
 package com.capitole.challenge.service;
 
+import com.capitole.challenge.exception.PriceNotFoundException;
 import com.capitole.challenge.model.PriceResponse;
 import com.capitole.challenge.model.entity.PriceEntity;
 import com.capitole.challenge.model.repository.PriceRepository;
@@ -14,13 +15,19 @@ import java.util.List;
 @Service
 public class PriceServiceImpl implements PriceService{
 
+
+    private final PriceRepository priceRepository;
+
     @Autowired
-    PriceRepository priceRepository;
+    public PriceServiceImpl(PriceRepository priceRepository) {
+        this.priceRepository = priceRepository;
+    }
 
     @Override
     public PriceResponse getCurrentPriceByPriceDTO(PriceDto priceDto){
         List<PriceEntity> priceEntity = priceRepository.getByPriceDTO(priceDto.getDateApplicationPrice(),priceDto.getProductId(),priceDto.getBrandId());
-        PriceEntity priorityPriceEntity = priceEntity.stream().max(Comparator.comparingInt(PriceEntity::getPriority)).get();
+        PriceEntity priorityPriceEntity = priceEntity.stream().max(Comparator.comparingInt(PriceEntity::getPriority))
+                .orElseThrow(PriceNotFoundException::new);
         return PriceMapper.INSTANCE.entityToPriceResponse(priorityPriceEntity);
     }
 }
