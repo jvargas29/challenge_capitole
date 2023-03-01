@@ -1,12 +1,14 @@
-package com.capitole.challenge.service.mapper;
+package com.capitole.challenge.unit.mapper;
 
 import com.capitole.challenge.model.PriceResponse;
 import com.capitole.challenge.model.entity.PriceEntity;
+import com.capitole.challenge.service.mapper.PriceMapper;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class MapperPriceTest {
 

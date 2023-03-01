@@ -1,9 +1,10 @@
-package com.capitole.challenge.rest;
+package com.capitole.challenge.unit.rest;
 
 import com.capitole.challenge.exception.PriceNotFoundException;
 import com.capitole.challenge.model.PriceResponse;
 import com.capitole.challenge.rest.dto.PriceDto;
 import com.capitole.challenge.service.PriceServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +35,21 @@ class PricesApiControllerTest {
     @MockBean
     PriceServiceImpl priceService;
 
-    @Test
-    void whenValidParam_thenReturns200() throws Exception {
-        PriceResponse priceResponse = new PriceResponse();
+    PriceResponse priceResponse;
+
+    @BeforeEach
+    public void setup(){
+        priceResponse = new PriceResponse();
         priceResponse.setProductId("1");
         priceResponse.setBrandId("1");
         priceResponse.setPriceListId("1");
         priceResponse.setPrice(35.50);
         priceResponse.setStartDate(OffsetDateTime.parse("2020-06-14T00:00:00Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
         priceResponse.setEndDate(OffsetDateTime.parse("2020-12-31T23:59:59Z", DateTimeFormatter.ISO_OFFSET_DATE_TIME));
+    }
 
+    @Test
+    void whenValidParam_thenReturns200() throws Exception {
         when(priceService.getCurrentPriceByPriceDTO(any(PriceDto.class))).thenReturn(priceResponse);
 
         mockMvc.perform(get("/prices")
